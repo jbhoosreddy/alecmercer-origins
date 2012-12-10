@@ -1,0 +1,173 @@
+<RCJobs>
+
+  <!--
+	 DefaultProperties can be override from command line
+	 pak_root - defines output folder for *.pak-s (required for NAnt build system)
+	 -->
+  <DefaultProperties
+    game="GameCrysis2"
+    engine="Engine"
+    src="."
+    trg="..\_rc_${p}"
+    pak_root=""
+    enable_cuda="true"
+	/>
+
+  <Properties
+    xml_types="*.animevents;*.cdf;*.chrparams;*.dlg;*.ent;*.fsq;*.fxl;*.ik;*.lmg;*.mtl;*.setup;*.xml;*.node;*.veg"
+    non_xml_types="*.ag;*.gfx;*.png;*.usm;*.fev;*.fsb;*.fdp;*.sfk;*.ogg;*.txt;*.anm;*.cal;*.grd;*.grp;*.cfg;*.csv;*.lua;*.dat;*.ini;*.xls;*.as;*.lut;*.mp2;*.mp3;*.xma"
+
+    src_game="${src}\${game}"
+    src_engine="${src}\${engine}"
+    trg_game="${trg}\${game}"
+    trg_engine="${trg}\${engine}"
+    pak_game="${pak_root}\${game}"
+    pak_engine="${pak_root}\${engine}"
+	/>
+
+  <if enable_cuda="true">
+    <Properties imagecompressor="NvTT" />
+  </if>
+  <ifnot enable_cuda="true">
+    <Properties imagecompressor="NvDxt" />
+  </ifnot>
+
+  <TestJob>
+  </TestJob>
+
+  <ConvertJob>
+    <Job input="${src_game}\Animations\Animations.cba" dest="${trg_game}\Animations" />
+
+    <Job sourceroot="${src_game}"   targetroot="${trg_game}"   input="*.cgf" SplitLODs="1" />
+    <Job sourceroot="${src_engine}" targetroot="${trg_engine}" input="*.cgf" SplitLODs="1" />
+    <Job sourceroot="${src_game}"   targetroot="${trg_game}"   input="*.cga" SplitLODs="1" />
+
+    <ifnot p="PC">
+      <Job sourceroot="${src_game}"   targetroot="${trg_game}"   input="*.chr" />
+      <Job sourceroot="${src_game}"   targetroot="${trg_game}"   input="${xml_types}" overwriteextension="xml" xmlfilterfile="xmlfilter.txt" />
+      <Job sourceroot="${src_engine}" targetroot="${trg_engine}" input="${xml_types}" overwriteextension="xml" xmlfilterfile="xmlfilter.txt" />
+    </ifnot>
+
+    <if p="PC">
+      <Job sourceroot="${src_game}"    targetroot="${trg_game}"   input="*.tif" imagecompressor="${imagecompressor}" />
+      <Job sourceroot="${src_engine}"  targetroot="${trg_engine}" input="*.tif" imagecompressor="${imagecompressor}" />
+      <Job sourceroot="${src_game}"    targetroot="${trg_game}"   input="*.dds" copyonly="1" />
+      <Job sourceroot="${src_engine}"  targetroot="${trg_engine}" input="*.dds" copyonly="1" />
+    </if>
+    <ifnot p="PC">
+      <Job sourceroot="${src_game}"    targetroot="${trg_game}"   input="*.tif" imagecompressor="${imagecompressor}" streaming="1" />
+      <Job sourceroot="${src_engine}"  targetroot="${trg_engine}" input="*.tif" imagecompressor="${imagecompressor}" streaming="1" />
+      <Job sourceroot="${src_game}"    targetroot="${trg_game}"   input="*.dds" />
+      <Job sourceroot="${src_engine}"  targetroot="${trg_engine}" input="*.dds" />
+    </ifnot>
+  </ConvertJob>
+
+  <CopyJob>
+    <if p="PC">
+      <Job sourceroot="${src_game}"   targetroot="${trg_game}"   input="*.chr" copyonly="1"/>
+      <Job sourceroot="${src_game}"   targetroot="${trg_game}"   input="${xml_types}" overwriteextension="xml" xmlfilterfile="xmlfilter.txt" copyonly="1"/>
+      <Job sourceroot="${src_engine}" targetroot="${trg_engine}" input="${xml_types}" overwriteextension="xml" xmlfilterfile="xmlfilter.txt" copyonly="1"/>
+    </if>
+
+    <Job sourceroot="${src_game}\Animations" input="*.ag" targetroot="${trg_game}\Animations" copyonly="1"/>
+    <Job sourceroot="${src_game}\Textures" input="*.gfx;*.png;*.usm" targetroot="${trg_game}\Textures" copyonly="1"/>
+
+    <Job sourceroot="${src_game}\Sounds" input="*.fev;*.fsb" targetroot="${trg_game}\Sounds" copyonly="1"/>
+    <if p="PC">
+      <Job sourceroot="${src_game}\Sounds" input="*.fdp;*.sfk" targetroot="${trg_game}\Sounds" copyonly="1"/>
+      <Job sourceroot="${src_game}\Music" input="*.ogg" targetroot="${trg_game}\Music" copyonly="1" />
+    </if>
+    <ifnot p="PC">
+      <Job sourceroot="${src_game}\Music" input="*.fsb" targetroot="${trg_game}\Music" copyonly="1" />
+    </ifnot>
+
+    <Job sourceroot="${src_game}\Videos" input="*.txt;*.usm" targetroot="${trg_game}\Videos" copyonly="1" />
+    <Job sourceroot="${src_game}\Objects" input="*.anm;*.cal;*.gfx;*.grd;*.grp" targetroot="${trg_game}\Objects" copyonly="1" />
+    <Job sourceroot="${src_game}\Scripts" input="*.cfg;*.csv;*.lua;*.txt" targetroot="${trg_game}\Scripts" copyonly="1" />
+
+    <Job sourceroot="${engine}\Config"                input="*.cfg;*.dat;*.ini;*.txt" targetroot="${trg}\Engine\Config" copyonly="1" />
+    <Job sourceroot="${engine}\Shaders\EngineAssets"  input="*.cfg;*.dat;*.ini;*.txt" targetroot="${trg}\Engine\Shaders\EngineAssets" copyonly="1" />
+
+    <Job sourceroot="${src_game}\Difficulty"  input="*.cfg;*.xls" targetroot="${trg_game}\Difficulty" copyonly="1" />
+    <Job sourceroot="${src_game}\Fonts"       input="*.ttf;*.txt" targetroot="${trg_game}\Fonts" copyonly="1" />
+    <Job sourceroot="${src_game}\Libs"        input="*.as;*.cfg;*.dat;*.gfx;*.lua;*.lut;*.txt;*.usm" targetroot="${trg_game}\Libs" copyonly="1" />
+    <!--<Job sourceroot="${src_game}\Entities"    input="" targetroot="${trg_game}\Entities" copyonly="1" />
+      <Job sourceroot="${src_game}\Materials"   input="" targetroot="${trg_game}\Materials" copyonly="1" />
+      <Job sourceroot="${src_game}\Prefabs"     input="" targetroot="${trg_game}\Prefabs" copyonly="1" />
+    -->
+
+    <Job sourceroot="${src_game}\Languages" input="*.gfx" targetroot="${trg_game}\Languages" copyonly="1" />
+    <if p="PC">
+      <Job sourceroot="${src_game}\Languages" input="*.mp2" targetroot="${trg_game}\Languages" copyonly="1" />
+    </if>
+    <if p="PS3">
+      <Job sourceroot="${src_game}\Languages" input="*.mp3" targetroot="${trg_game}\Languages" copyonly="1" />
+    </if>
+    <if p="X360">
+      <Job sourceroot="${src_game}\Languages" input="*.xma" targetroot="${trg_game}\Languages" copyonly="1" />
+    </if>
+
+  </CopyJob>
+
+  <PakJob>
+    <!-- notice: *.pak and *.$* are excluded automatically from PAK-files -->
+    <Properties streaming_list="${trg}\streaminglist.txt" />
+
+		<Job input="" targetroot="${trg}"
+			refs_scan="1"
+      refs_save="${streaming_list}"
+			refs_root="${trg_game}"
+      refs_save_include="*.cgf;*.dds;*.dds.*;*.dba;*.caf;*.dat"
+      refs_save_exclude="*:*"
+		/>
+
+    <Job sourceroot="${trg_game}" input="*" listfile="${streaming_list}" zip="${pak_game}\" zip_sort="streaming" />
+
+    <Job sourceroot="${trg_game}" input="Difficulty\*.*"  zip="${pak_game}\GameData.pak" exclude_listfile="${streaming_list}" />
+    <Job sourceroot="${trg_game}" input="Entities\*.*"    zip="${pak_game}\GameData.pak" exclude_listfile="${streaming_list}" />
+    <Job sourceroot="${trg_game}" input="Fonts\*.*"       zip="${pak_game}\GameData.pak" exclude_listfile="${streaming_list}" />
+    <Job sourceroot="${trg_game}" input="Libs\*.*"        zip="${pak_game}\GameData.pak" exclude_listfile="${streaming_list}" />
+    <Job sourceroot="${trg_game}" input="Materials\*.*"   zip="${pak_game}\GameData.pak" exclude_listfile="${streaming_list}" />
+    <Job sourceroot="${trg_game}" input="Prefabs\*.*"     zip="${pak_game}\GameData.pak" exclude_listfile="${streaming_list}" />
+    <Job sourceroot="${trg_game}" input="Levels\*.*xml"   zip="${pak_game}\GameData.pak" exclude_listfile="${streaming_list}" exclude="*filelist.*" />
+
+    <Job sourceroot="${trg_game}" input="Animations\*.*"  zip="${pak_game}\Animations.pak" exclude_listfile="${streaming_list}" />
+    <Job sourceroot="${trg_game}" input="Objects\*.anm"   zip="${pak_game}\Animations.pak" exclude_listfile="${streaming_list}" />
+
+    <Job sourceroot="${trg_game}" input="Objects\*.*"     zip="${pak_game}\Objects.pak" exclude_listfile="${streaming_list}"  exclude="*.anm" />
+
+    <Job sourceroot="${trg_game}" input="Scripts\*.*"     zip="${pak_game}\Scripts.pak"   exclude_listfile="${streaming_list}" />
+    <Job sourceroot="${trg_game}" input="Textures\*.*"    zip="${pak_game}\Textures.pak"  exclude_listfile="${streaming_list}" />
+    <Job sourceroot="${trg_game}" input="Shaders\*.*"     zip="${pak_game}\Shaders.pak"   exclude_listfile="${streaming_list}" />
+
+    <Job sourceroot="${trg_game}" input="Music\*.*"       zip="${pak_game}\Music.pak"   zip_compression="0" exclude_listfile="${streaming_list}" />
+    <Job sourceroot="${trg_game}" input="Sounds\*.*"      zip="${pak_game}\Sounds.pak"  zip_compression="0" exclude_listfile="${streaming_list}" />
+    <Job sourceroot="${trg_game}" input="Videos\*.*"      zip="${pak_game}\Videos.pak"  zip_compression="0" exclude_listfile="${streaming_list}" />
+    
+    <Job sourceroot="${trg_game}" input="Languages\*.*"   zip="${pak_game}\Localized\English.pak" zip_compression="0"/>
+    <Job sourceroot="${trg_game}\Localization\Spanish\GameCrysis2" input="Languages\*.*" zip="${pak_game}\Localized\Spanish.pak" zip_compression="0"/>
+
+    <Job sourceroot="${trg_engine}" input="Config\*.*;Shaders\EngineAssets\*.*" zip="${pak_engine}\Engine.pak"/>
+  </PakJob>
+
+  <CleanJob>
+    <Job input="" targetroot="${trg}" clean_targetroot="1" />
+  </CleanJob>
+
+  <ValidateJob>
+    <Run Job="ConvertJob"/>
+    <Job input="" targetroot="${trg}" clean_targetroot="1" refs_scan="1" />
+  </ValidateJob>
+
+  <CompileAssetsJob>
+    <Run Job="ConvertJob"/>
+    <Run Job="CopyJob"/>
+    <Run Job="CleanJob"/>
+  </CompileAssetsJob>
+
+  <Run Job="ConvertJob"/>
+  <Run Job="CopyJob"/>
+  <Run Job="PakJob"/>
+  <Run Job="CleanJob"/>
+
+</RCJobs>

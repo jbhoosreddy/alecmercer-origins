@@ -1,0 +1,48 @@
+<RCJobs>
+
+<MakePerLevelCache>
+	<DefaultProperties
+		buildsrc="Game"
+		builddst=""
+		gamemode="SP"
+		/>
+
+	<Properties CacheDir="_LevelCache" />
+	<Properties LC="${CacheDir}\${Level}" />
+	<Properties ListFile="${buildsrc}\Levels\${Level}\auto_resourcelist.txt" />
+	<Properties max_dds_size="6000" />
+	<Properties max_cgf_size="32768" />
+
+	<if gamemode="SP">
+		<Job sourceroot="${buildsrc}" input="*.cgf" listfile="${ListFile}" targetroot="${LC}\cgf" SplitLODs="1" StripMesh="1" SkipMissing="1" />
+		<Job sourceroot="${buildsrc}" input="Objects\weapons\*.cgf" targetroot="${LC}\cgf\objects\weapons" SplitLODs="1" StripMesh="1" SkipMissing="1"/>
+		<Job sourceroot="${buildsrc}" input="Objects\effects\*.cgf" targetroot="${LC}\cgf\objects\effects" SplitLODs="1" StripMesh="1" SkipMissing="1"/>
+		<Job input="${LC}\cgf\*.*" zip="${LC}\cgf.pak" skipmissing="1"/>
+
+		<Job sourceroot="${buildsrc}" input="*.cga" listfile="${ListFile}" targetroot="${LC}\cga" SplitLODs="1" StripMesh="1" SkipMissing="1"/>
+		<Job sourceroot="${buildsrc}" input="Objects\weapons\*.cga" targetroot="${LC}\cgf\objects\weapons" SplitLODs="1" StripMesh="1" SkipMissing="1"/>
+		<Job input="${LC}\cga\*.*" zip="${LC}\cga.pak" SkipMissing="1"/>
+		<Job sourceroot="${buildsrc}" input="*.anm" listfile="${ListFile}" zip="${LC}\cga.pak" SkipMissing="1"/>
+	</if>
+	<if gamemode="MP">
+		<Job input="*.cgf" listfile="${ListFile}" targetroot="${LC}\cgf" SkipMissing="1" />
+		<Job input="${LC}\cgf\*.*" zip="${LC}\cgf_full.pak" />
+
+		<Job sourceroot="${buildsrc}" input="*.cga" listfile="${ListFile}" targetroot="${LC}\cga" SkipMissing="1"/>
+		<Job input="${LC}\cga\*.*" zip="${LC}\cga_full.pak" skipmissing="1"/>
+		<Job sourceroot="${buildsrc}" input="*.anm" listfile="${ListFile}" zip="${LC}\cga_full.pak" skipmissing="1"/>
+	</if>
+
+	<Job sourceroot="${buildsrc}" input="*.ag;*.cal;*.lut;*.ttf;*.txt;*stars.dat;*.gfx;*.lua" listfile="${ListFile}" zip="${LC}\xml.pak" sourceMaxSize="300000" SkipMissing="1"/>
+	<Job sourceroot="${builddst}" input="*.xml;*.mtl;*.cdf;*.chrparams;*.fxl;*.lmg;*.fsq;*.animevents;*.dlg;*.ent" listfile="${ListFile}" zip="${LC}\xml.pak" sourceMaxSize="300000" SkipMissing="1"/>
+
+	<ifnot p="PC">
+		<Job sourceroot="${builddst}" input="*.dds" listfile="${ListFile}" listformat="{1}.dds.0;{1}.dds.0a" zip="${LC}\dds0.pak" no_name_as_crc32="1" sourceMaxSize="300000" skipmissing="1"/>
+		<Job sourceroot="${builddst}" input="*.dds" listfile="${ListFile}" listformat="{1}.dds.1;{1}.dds.1a;{1}.dds.2;{1}.dds.2a;{1}.dds.3;{1}.dds.3a;{1}.dds.4;{1}.dds.4a;{1}.dds.5;{1}.dds.5a" zip="${LC}\dds_cache.pak" sourceMaxSize="${max_dds_size}" skipmissing="1"/>
+		<if gamemode="SP">
+			<Job sourceroot="${builddst}" input="*.cgf" listfile="${ListFile}" zip="${LC}\cgf_cache.pak" sourceMaxSize="${max_cgf_size}" skipmissing="1"/>
+		</if>
+	</ifnot>
+</MakePerLevelCache>
+
+</RCJobs>

@@ -1,0 +1,79 @@
+<RCJobs>
+
+  <!--
+	 DefaultProperties can be override from command line
+	 pak_root - defines output folder for *.pak-s (required for NAnt build system)
+	 -->
+  <DefaultProperties
+    game="Game"
+    engine="Engine"
+	languages="Localization"
+    src="."
+    trg="TempRC\${p}"
+    pak_root="OutRC\${p}"
+    enable_cuda="true"
+	/>
+
+  <Properties
+    xml_types="*.animevents;*.cdf;*.chrparams;*.dlg;*.ent;*.fsq;*.fxl;*.ik;*.lmg;*.mtl;*.setup;*.xml;*.node;*.veg"
+    non_xml_types="*.ag;*.gfx;*.png;*.usm;*.fev;*.fsb;*.fdp;*.sfk;*.ogg;*.txt;*.anm;*.cal;*.grd;*.grp;*.cfg;*.csv;*.lua;*.dat;*.ini;*.xls;*.as;*.lut;*.mp2;*.mp3;*.xma"
+
+    src_game="${src}\${game}"
+    src_engine="${src}\${engine}"
+	src_languages="${src}\${languages}"
+    trg_game="${trg}\${game}"
+    trg_engine="${trg}\${engine}"
+	trg_languages="${trg}\${languages}"
+    pak_game="${pak_root}\${game}"
+    pak_engine="${pak_root}\${engine}"
+	/>
+
+  <if enable_cuda="true">
+    <Properties imagecompressor="NvTT" />
+  </if>
+  <ifnot enable_cuda="true">
+    <Properties imagecompressor="NvDxt" />
+  </ifnot>
+
+  <CopyJob>
+	
+	<Job sourceroot="${src_game}\Entities" input="*" targetroot="${trg_game}\Entities" copyonly="1" />
+    <Job sourceroot="${src_game}\Scripts" input="*" targetroot="${trg_game}\Scripts" copyonly="1" />
+	<Job sourceroot="${src_engine}\Shaders" input="*.ext;*.cfx;*.cfi;*.txt" targetroot="${trg_engine}\Shaders" copyonly="1" />
+	
+  </CopyJob>
+
+  <PakJob>
+      <ifnot p="PC">
+		<!-- notice: *.pak and *.$* are excluded automatically from PAK-files -->
+		
+	<Job sourceroot="${trg_game}" input="Entities\*.*"    zip="${pak_game}\Scripts.pak" exclude_listfile="${streaming_list}" />
+	<Job sourceroot="${trg_game}" input="Scripts\*.*"     zip="${pak_game}\Scripts.pak"   exclude_listfile="${streaming_list}" />
+	
+	</ifnot>
+	<if p="PC">
+     
+	  <Job sourceroot="${trg_game}" input="Entities\*.*"    zip="${pak_game}\Scripts.pak" />
+      <Job sourceroot="${trg_game}" input="Scripts\*.*"     zip="${pak_game}\Scripts.pak" />
+
+	</if>
+    
+	<Job sourceroot="${trg_engine}" input="Shaders\*.ext;Shaders\*.cfi;Shaders\*.cfx"     zip="${pak_engine}\Shaders.pak" />
+	
+  </PakJob>
+
+  <CleanJob>
+    <Job input="" targetroot="${trg}" clean_targetroot="1" />
+  </CleanJob>
+
+  <ValidateJob>
+  </ValidateJob>
+
+  <CompileAssetsJob>
+   </CompileAssetsJob>
+
+  <Run Job="CopyJob"/>
+  <Run Job="PakJob"/>
+  <Run Job="CleanJob"/>
+
+</RCJobs>

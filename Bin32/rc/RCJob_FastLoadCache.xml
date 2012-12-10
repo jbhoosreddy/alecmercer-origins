@@ -1,0 +1,34 @@
+<RCJobs>
+
+	<DefaultProperties
+		buildsrc=""
+		builddst=""
+		/>
+
+  <Properties GameDir="Game" />
+  <Properties CacheDir="${builddst}\${GameDir}\_FastLoad" />
+  <Properties MPCacheDir="${builddst}\${GameDir}\modes" />
+		
+  <Job zip="${CacheDir}\startup.pak" sourceroot="${buildsrc}\Engine\Config" sourceMaxSize="100000"  FolderInZip="Config" input="*.cfg;*.dat;*.ini;*.txt" />
+  <Job zip="${CacheDir}\startup.pak" sourceroot="${builddst}\Engine\Config" sourceMaxSize="100000"  FolderInZip="Config" input="*.xml" />
+
+	<Job zip="${CacheDir}\startup.pak" sourceMaxSize="100000" sourceroot="${buildsrc}\${GameDir}" input="*.lut;*.ttf;*.txt;*stars.dat;*.gfx;*.as" exclude="Localized\*.*" />
+	<Job zip="${CacheDir}\startup.pak" sourceMaxSize="1000000" sourceroot="${builddst}\${GameDir}" input="*.mtl;*.xml;*.dlg;*.ent;*.node" exclude="Localized\*.*" />
+
+  <Job zip="${CacheDir}\IntroMovies.pak" sourceroot="${buildsrc}\${GameDir}" input="Videos\IntroMovies.usm" zip_compression="0"/>
+  <Job zip="${CacheDir}\IntroMovies.pak" sourceroot="${buildsrc}\${GameDir}" input="Libs\UI\USM_Player_Intro.gfx" zip_compression="0"/>
+
+	<Job zip="${MPCacheDir}\mpmenumodels.pak" sourceroot="${buildsrc}\${GameDir}" input="*.animevents;*.anm;*.cdf;*.cga;*.cgf;*.chr;*.chrparams;*.img;*.lmg;*.mtl" listfile="${buildsrc}\${GameDir}\Levels\Wars\mpmenu_list.txt" SkipMissing="1"/>
+	<Job zip="${MPCacheDir}\mpmenumodels.pak" sourceroot="${builddst}\${GameDir}" input="*.animevents;*.anm;*.cdf;*.cga;*.cgf;*.chr;*.chrparams;*.img;*.lmg;*.mtl" listfile="${buildsrc}\${GameDir}\Levels\Wars\mpmenu_list.txt" SkipMissing="1"/>
+
+	<Job zip="${MPCacheDir}\mpmenumodels.pak" sourceroot="${buildsrc}\Engine" input="Shaders\EngineAssets\Objects\default.cgf" SkipMissing="1"/>
+	<Job zip="${MPCacheDir}\mpmenumodels.pak" sourceroot="${builddst}\Engine" input="Shaders\EngineAssets\Objects\default.cgf" SkipMissing="1"/>
+
+	<Job zip="${MPCacheDir}\gamemodeswitch.pak" sourceroot="${buildsrc}\${GameDir}" input="*.xml;*.gfx" listfile="${buildsrc}\${GameDir}\Levels\Wars\gamemodeswitch_sp_list.txt" SkipMissing="1"/>
+	<Job zip="${MPCacheDir}\gamemodeswitch.pak" sourceroot="${builddst}\${GameDir}" input="*.xml;*.gfx" listfile="${buildsrc}\${GameDir}\Levels\Wars\gamemodeswitch_sp_list.txt" SkipMissing="1"/>
+
+	<Job zip="${MPCacheDir}\gamemodeswitch.pak" sourceroot="${buildsrc}\${GameDir}" input="*.xml;*.gfx" listfile="${buildsrc}\${GameDir}\Levels\Wars\gamemodeswitch_mp_list.txt" SkipMissing="1"/>
+	<Job zip="${MPCacheDir}\gamemodeswitch.pak" sourceroot="${builddst}\${GameDir}" input="*.xml;*.gfx" listfile="${buildsrc}\${GameDir}\Levels\Wars\gamemodeswitch_mp_list.txt" SkipMissing="1"/>
+
+
+</RCJobs>

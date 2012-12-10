@@ -1,0 +1,29 @@
+Installing
+----------
+Copy the AuditionClient X360 folder onto the xbox harddrive.
+
+The FMOD AuditionClient X360.xex should apppear in the dashboard executable list.  
+Run the executable to start the auditionclient.
+
+Instructions on use
+-------------------
+Connect to the AuditionClient from FMOD Designer by going to the 'Audition' menu then 
+'Manage Connections' menu and adding the name and IP address of the Xbox devkit as a new entry.
+
+The IP address you should add is displayed from inside the AuditionClient application on the 
+screen in the lower left.
+
+To connect to the Xbox click 'connect' in the connections dialog.
+
+Now you can play events and change parameters from designer, and the audio output will come 
+from the Xbox itself, rather than FMOD Designer.
+
+A spectrum, speaker levels and oscilliscope is displayed for user feedback.
+
+A small flashing dot above the 'Channels Playing' display will give visible feedback to whether 
+the application is still executing on the Xbox or not.
+
+
+Quitting the program
+---------------------
+Press 'start' and 'back' at the same time to quit.

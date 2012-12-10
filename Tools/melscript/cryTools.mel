@@ -1,0 +1,304 @@
+
+global proc cryToolsCreateCryExportNodeCloseWindow()
+{
+	deleteUI -window CRYNEWEXPORTNODE_WINDOW;
+}
+
+proc cryToolsCreateCryExportNodeCreateCore( string $name, int $fileType, int $groupSelection )
+{
+	string $selection[];
+	if( $groupSelection )
+	{
+		$selection = `ls -sl`;
+	}
+
+	// Create the new node and make sure it's transforms are zeroed
+	string $fullName = ("cryExportNode_"+$name);
+	$newGroup = `group -empty -name $fullName`;
+	xform -objectSpace -pivots 0 0 0 $newGroup;
+			
+	// Add attributes to all nodes, might as well.
+	cryExportAddAttributes;
+		
+	setAttr ($newGroup+".fileType") ($fileType);
+	
+	for( $item in $selection )
+	{
+		parent $item $newGroup;
+	}
+}
+
+global proc cryToolsCreateCryExportNodeCreate()
+{
+	if(`window -ex CRYNEWEXPORTNODE_WINDOW`) 
+	{
+		// Create the new node and make sure it's transforms are zeroed
+		string $name = `textField -q -text CRYTOOLS_NEWEXPORTNODE_NAME`;
+		
+		// Set the fileType. Subtract 1 as the optionMenu index is 1 based and the attr is 0 based.
+		int $fileType = `optionMenu -q -select CRYNEWEXPORTNODE_FILETYPE`;
+		$fileType -= 1;
+		
+		int $groupSelection = `checkBox -q -value CRYNEWEXPORTNODE_GROUPSELECTION`;
+		
+		cryToolsCreateCryExportNodeCreateCore $name $fileType $groupSelection;
+	
+		cryToolsCreateCryExportNodeCloseWindow;
+	}
+}
+
+global proc cryToolsCreateCryExportNode( int $quietMode )
+{
+	string $newName = "New";
+	string $selection[] = `ls -sl`;
+	if( size($selection) > 0 )
+	{
+		$newName = $selection[0];
+	}
+
+	if( $quietMode )
+	{
+		int $fileType = 0;
+		int $groupSelection = 1;
+		cryToolsCreateCryExportNodeCreateCore $newName $fileType $groupSelection;
+	}
+	else if(!`window -ex CRYNEWEXPORTNODE_WINDOW`) 
+	{
+		int $pluginLoaded = `cryPluginIsLoaded`;
+		if( !$pluginLoaded )
+		{
+			confirmDialog -title "Cry Export" -message "The MayaCryExport plugin is not loaded." -button "OK";
+			return;
+		}
+	
+		if(`windowPref -exists CRYNEWEXPORTNODE_WINDOW`) 
+		{
+			windowPref -wh 400 150 -tlc `windowPref -q -topEdge CRYNEWEXPORTNODE_WINDOW` `windowPref -q -leftEdge CRYNEWEXPORTNODE_WINDOW` CRYNEWEXPORTNODE_WINDOW;
+			//windowPref -remove CRYNEWEXPORTNODE_WINDOW;
+		}
+		window -titleBar true -title "Create CryExportNode" -widthHeight 400 150 -sizeable false -mnb false -mxb false CRYNEWEXPORTNODE_WINDOW;
+
+		$layout1 = `formLayout -numberOfDivisions 100`;
+		{
+			columnLayout -adjustableColumn true -rowSpacing 15 CRYNEWEXPORTNODE_MAINCOL;
+			{	
+				rowLayout -numberOfColumns 2 -columnAttach 1 "right" 5 -columnWidth 1 100 -columnWidth 2 200 CRYNEWEXPORTNODE_NAMEROW;
+				{
+					text -label "Name";
+					textField -text $newName CRYTOOLS_NEWEXPORTNODE_NAME;				
+				}
+				setParent ..;
+				rowLayout -numberOfColumns 2 -columnAttach 1 "right" 5 -columnWidth 1 100 -columnWidth 2 200 CRYNEWEXPORTNODE_FILETYPEROW;
+				{
+					text -label "File Type";
+					optionMenu CRYNEWEXPORTNODE_FILETYPE;
+					{
+						string $enumString = `cryExportGetFileTypeEnumString`;
+						string $tokens[];
+						$numTokens = `tokenize $enumString ":" $tokens`;
+						for( $i = 0;$i<$numTokens;$i++ )
+						{
+							menuItem -label $tokens[$i];
+						}
+					}			
+				}
+				setParent ..;
+				rowLayout -numberOfColumns 2 -columnAttach 1 "right" 5 -columnWidth 1 100 -columnWidth 2 200 CRYNEWEXPORTNODE_GROUPSELECTIONROW;
+				{
+					text "";
+					checkBox -label "Group Selection" CRYNEWEXPORTNODE_GROUPSELECTION;
+				}
+				setParent ..;
+			}
+			setParent ..;
+		}
+		$createbutton = `button -label "Create" -command ("cryToolsCreateCryExportNodeCreate")`;
+		$closebutton = `button -label "Close" -command ("cryToolsCreateCryExportNodeCloseWindow")`;
+		setParent ..;
+	
+		formLayout -edit
+			-attachForm CRYNEWEXPORTNODE_MAINCOL "top" 15
+			-attachForm CRYNEWEXPORTNODE_MAINCOL "left" 5
+			-attachForm CRYNEWEXPORTNODE_MAINCOL "right" 5
+			-attachControl CRYNEWEXPORTNODE_MAINCOL "bottom" 5 $closebutton
+
+			-attachForm $createbutton "bottom" 5 
+			-attachForm $createbutton "left" 5
+			-attachPosition $createbutton "right" 5 50
+			-attachNone $createbutton "top"
+			-attachForm $closebutton "bottom" 5 
+			-attachPosition $closebutton "left" 5 50
+			-attachForm $closebutton "right" 5
+			-attachNone $closebutton "top"
+			$layout1;
+			
+		showWindow CRYNEWEXPORTNODE_WINDOW;
+    }
+	else
+	{
+		showWindow CRYNEWEXPORTNODE_WINDOW;
+	}
+}
+
+global proc cryToolsCreateCryHelperNode()
+{
+	string $newNode = `createNode cryHelperNode`;
+	string $newParent = firstParentOf($newNode);
+	
+	rename $newNode "cryHelperShape#";
+	rename $newParent "cryHelper#";
+}	
+
+//////////////////////////////////////////////////////////////////////
+// Cry Tools Menu
+//////////////////////////////////////////////////////////////////////
+global proc cryToolsRemoveMenu()
+{
+	if( `control -q -exists CRYTOOLS_MENU` )
+	{
+		deleteUI -menu CRYTOOLS_MENU;
+	}
+}
+
+proc createCryToolsMenu()
+{
+	// Remove the menu first
+	cryToolsRemoveMenu;
+	
+	global string $gMainWindow;
+
+	setParent $gMainWindow;	
+	menu -l "Cry Tools" -p MayaWindow -to 1 -aob true CRYTOOLS_MENU;
+	
+	menuItem -label "Create CryExportNode" -command "cryToolsCreateCryExportNode 0";
+	menuItem -label "Create CryHelperNode" -command "cryToolsCreateCryHelperNode";
+	menuItem -divider true;
+	menuItem -label "Zero Joint Rotations" -command "cryAnimZeroJointRotation";
+	menuItem -label "Anim Manager" -command "cryAnimManagerWin";
+	menuItem -divider true;
+	menuItem -label "Load Plug-in" -command "cryLoadPlugin";
+	menuItem -label "Unload Plug-in" -command "cryUnloadPlugin";
+}
+
+//////////////////////////////////////////////////////////////////////
+// Cry Tools UI
+//////////////////////////////////////////////////////////////////////
+global proc cryToolsUICloseWindow()
+{
+	deleteUI -window CRYTOOLS_WINDOW;
+}
+
+proc createCryToolsWindow()
+{
+	if(!`window -ex CRYTOOLS_WINDOW`) 
+	{
+		if(`windowPref -exists CRYTOOLS_WINDOW`) 
+		{
+			windowPref -wh 200 400 -tlc `windowPref -q -topEdge CRYTOOLS_WINDOW` `windowPref -q -leftEdge CRYTOOLS_WINDOW` CRYTOOLS_WINDOW;
+			//windowPref -remove CRYTOOLS_WINDOW;
+		}
+		window -titleBar true -title "Cry Tools" -widthHeight 200 400 -sizeable true -mnb false -mxb false CRYTOOLS_WINDOW;
+
+		$layout1 = `formLayout -numberOfDivisions 100`;
+		{				
+			columnLayout -adjustableColumn true -rowSpacing 15 CRYTOOLS_MAINCOL;
+			{		
+				frameLayout -label "Node Tools" -borderStyle "out" -collapsable true -marginHeight 5 -marginWidth 5;
+				{
+					columnLayout -adjustableColumn true	-rowSpacing 5;
+					{
+						button -label "Create CryExportNode" -command "cryToolsCreateCryExportNode 0";
+						button -label "Create CryHelperNode" -command "cryToolsCreateCryHelperNode";
+					}
+					setParent ..;
+				}
+				setParent ..;
+				
+				frameLayout -label "Animation Tools" -borderStyle "out" -collapsable true -marginHeight 5 -marginWidth 5;
+				{
+					columnLayout -adjustableColumn true	-rowSpacing 5;
+					{
+						button -label "Zero Joint Rotations" -command "cryAnimZeroJointRotation";
+						button -label "Anim Manager" -command "cryAnimManagerWin";
+					}
+					setParent ..;
+				}
+				setParent ..;
+				
+				frameLayout -label "Plug-in Tools" -borderStyle "out" -collapsable true -marginHeight 5 -marginWidth 5;
+				{
+					columnLayout -adjustableColumn true	-rowSpacing 5;
+					{
+						button -label "Load Plug-in" -command "cryLoadPlugin";
+						button -label "Unload Plug-in" -command "cryUnloadPlugin";
+					}
+					setParent ..;
+				}
+				setParent ..;
+			}
+			setParent ..;
+		}
+		$closebutton = `button -label "Close" -command ("cryToolsUICloseWindow")`;
+		setParent ..;
+	
+		formLayout -edit
+			-attachForm CRYTOOLS_MAINCOL "top" 5
+			-attachForm CRYTOOLS_MAINCOL "left" 5
+			-attachForm CRYTOOLS_MAINCOL "right" 5
+			-attachControl CRYTOOLS_MAINCOL "bottom" 5 $closebutton
+
+			-attachForm $closebutton "bottom" 5 
+			-attachForm $closebutton "left" 5
+			-attachForm $closebutton "right" 5
+			-attachNone $closebutton "top"
+			$layout1;
+    }
+
+	showWindow CRYTOOLS_WINDOW;
+}
+
+//////////////////////////////////////////////////////////////////////
+// Window and menu creation entry functions.
+//////////////////////////////////////////////////////////////////////
+proc cryToolsSourceDependencies()
+{
+	eval("source cryExport.mel");
+	eval("source cryAnim.mel");
+}
+
+global proc cryToolsWin()
+{
+	cryToolsSourceDependencies;
+	createCryToolsWindow;
+}
+
+global proc cryToolsMenu()
+{
+	cryToolsSourceDependencies;
+	createCryToolsMenu;
+}
+
+//////////////////////////////////////////////////////////////////////
+// Shelf functions.
+//////////////////////////////////////////////////////////////////////
+global proc string cryToolsGetShelfNameFromScriptName( string $scriptName )
+{
+	string $shelfName = $scriptName;
+	string $tokens[];
+	$numTokens = `tokenize $scriptName "_." $tokens`;
+	if( $numTokens == 3 )
+	{
+		$shelfName = $tokens[1];
+	}
+	return $shelfName;
+}
+
+global proc cryToolsLoadShelf( string $scriptName )
+{
+	string $shelfName = `cryToolsGetShelfNameFromScriptName $scriptName`;
+	if (`shelfLayout -exists $shelfName`)
+	{
+		deleteUI $shelfName;
+	}
+	evalDeferred( "loadNewShelf "+$scriptName );
+}

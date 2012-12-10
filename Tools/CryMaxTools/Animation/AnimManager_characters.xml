@@ -1,0 +1,97 @@
+<CharacterSettings>
+  <FileInfo Rev="1.0" />
+  <Characters>
+    <Character Name="Human" Active="true">
+      <Setup Name="SDK_Character_male" Active="true" SourcePath="Game\Animations\human_male\" GamePath="Game\Animations\human_male\">
+        <Model ModelPath="Game\Objects\Characters\neutral_male\SDK_character_male.max" AutoSync="true" RemoveOld="true" PreferLoad="true" />
+        <Biped PosePath="" AutoSync="true" RemoveOld="false" />
+        <Align TargetNode="" SourceNode="" Rotation="(quat 0 0 0 1)" Position="[0,0,0]" />
+        <Misc SkipFirst="0" SkipLast="0" CustomRig="false" />
+        <SourceNodes>
+          <Node Name="Bip01 Head" />
+          <Node Name="Bip01 L Calf" />
+          <Node Name="Bip01 L Clavicle" />
+          <Node Name="Bip01 L Finger0" />
+          <Node Name="Bip01 L Finger01" />
+          <Node Name="Bip01 L Finger02" />
+          <Node Name="Bip01" />
+          <Node Name="Bip01 L Finger11" />
+          <Node Name="Bip01 L Finger12" />
+          <Node Name="Bip01 L Finger1" />
+          <Node Name="Bip01 L Finger21" />
+          <Node Name="Bip01 L Finger22" />
+          <Node Name="Bip01 L Finger2" />
+          <Node Name="Bip01 L Finger3" />
+          <Node Name="Bip01 L Finger31" />
+          <Node Name="Bip01 L Finger32" />
+          <Node Name="Bip01 L Finger41" />
+          <Node Name="Bip01 L Finger42" />
+          <Node Name="Bip01 L Finger4" />
+          <Node Name="Bip01 L Foot" />
+          <Node Name="Bip01 L Forearm" />
+          <Node Name="Bip01 L Hand" />
+          <Node Name="Bip01 L Thigh" />
+          <Node Name="Bip01 L Toe0" />
+          <Node Name="Bip01 L UpperArm" />
+          <Node Name="Bip01 Neck" />
+          <Node Name="Bip01 Pelvis" />
+          <Node Name="Bip01 R Calf" />
+          <Node Name="Bip01 R Clavicle" />
+          <Node Name="Bip01 R Finger0" />
+          <Node Name="Bip01 R Finger01" />
+          <Node Name="Bip01 R Finger02" />
+          <Node Name="Bip01 R Finger11" />
+          <Node Name="Bip01 R Finger12" />
+          <Node Name="Bip01 R Finger1" />
+          <Node Name="Bip01 R Finger2" />
+          <Node Name="Bip01 R Finger21" />
+          <Node Name="Bip01 R Finger22" />
+          <Node Name="Bip01 R Finger31" />
+          <Node Name="Bip01 R Finger32" />
+          <Node Name="Bip01 R Finger3" />
+          <Node Name="Bip01 R Finger4" />
+          <Node Name="Bip01 R Finger41" />
+          <Node Name="Bip01 R Finger42" />
+          <Node Name="Bip01 R Foot" />
+          <Node Name="Bip01 R Forearm" />
+          <Node Name="Bip01 R Hand" />
+          <Node Name="Bip01 R Thigh" />
+          <Node Name="Bip01 R Toe0" />
+          <Node Name="Bip01 R UpperArm" />
+          <Node Name="Bip01 Spine" />
+          <Node Name="Bip01 Spine1" />
+          <Node Name="Bip01 Spine2" />
+          <Node Name="Bip01 Spine3" />
+          <Node Name="Locator_Locomotion" />
+        </SourceNodes>
+        <GameBones>
+          <Node Name="Bip01 Spine">
+            <Condition Name="string_animName" Active="true" Layer="0" VarID="1" StateID="1" GroupID="2" Value="&quot;UB&quot;" />
+            <Condition Name="string_animName" Active="true" Layer="0" VarID="1" StateID="1" GroupID="2" Value="&quot;AimPoses&quot;" />
+          </Node>
+          <Node Name="Bip01" />
+        </GameBones>
+      </Setup>
+    </Character>
+    <Character Name="----------------" Active="false">
+      <Setup Name="Base Char" Active="true" SourcePath="" GamePath="">
+        <Model ModelPath="" AutoSync="true" RemoveOld="true" PreferLoad="false" />
+        <Biped PosePath="" AutoSync="true" RemoveOld="false" />
+        <Align TargetNode="" SourceNode="" Rotation="(quat 0 0 0 1)" Position="[0,0,0]" />
+        <Misc SkipFirst="0" SkipLast="0" CustomRig="false" />
+        <SourceNodes />
+        <GameBones />
+      </Setup>
+    </Character>
+    <Character Name="Weapons" Active="true">
+      <Setup Name="Scar" Active="true" SourcePath="Game\Animations\weapons\us\scar\" GamePath="Game\Animations\weapons\us\scar\">
+        <Model ModelPath="Game\Objects\Weapons\Scar\scar_tp.max" AutoSync="true" RemoveOld="true" PreferLoad="false" />
+        <Biped PosePath="" AutoSync="true" RemoveOld="false" />
+        <Align TargetNode="weapon_bone" SourceNode="MASTER_CON" Rotation="(quat 0 0 0 1)" Position="[0,0,0]" />
+        <Misc SkipFirst="0" SkipLast="0" CustomRig="false" />
+        <SourceNodes />
+        <GameBones />
+      </Setup>
+    </Character>
+  </Characters>
+</CharacterSettings>

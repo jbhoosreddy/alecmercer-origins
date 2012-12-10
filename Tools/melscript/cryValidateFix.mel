@@ -1,0 +1,23 @@
+
+
+global proc int cryValidateFixCanFix(string $messageType)
+{
+	if( strcmp($messageType, "llShouldNotInheritTrans") == 0 )
+		return 1;
+	return 0;
+}
+
+global proc cryValidateFix( string $messageType, string $focusNode)
+{
+	if( strcmp($messageType, "llShouldNotInheritTrans") == 0 )
+	{
+		cryValidateFixShouldNotInheritTransform $focusNode;
+	}
+}
+
+//////////////////////////////////////////////////////////////////////
+// Fix functions
+global proc cryValidateFixShouldNotInheritTransform(string $node)
+{
+	setAttr ($node+".inheritsTransform") 0;
+}

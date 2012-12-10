@@ -1,0 +1,207 @@
+<AimPoses>
+  <NodePresets>
+    <Preset Name="Biped Human" UsedPoses="3">
+      <Node Name="Bip01 Spine" Influence="10.0" />
+      <Node Name="Bip01 Spine1" Influence="20.0" />
+      <Node Name="Bip01 Spine2" Influence="40.0" />
+      <Node Name="Bip01 Spine3" Influence="70.0" />
+      <Node Name="Bip01 Neck" Influence="50.0" />
+      <Node Name="Bip01 Head" Influence="100.0" />
+      <Node Name="Bip01 L Clavicle" Influence="80.0" />
+      <Node Name="Bip01 L UpperArm" Influence="100.0" />
+      <Node Name="Bip01 L Forearm" Influence="100.0" />
+      <Node Name="Bip01 L Hand" Influence="100.0" Align="Bip01 R Hand" />
+      <Node Name="Bip01 R Clavicle" Influence="90.0" />
+      <Node Name="Bip01 R UpperArm" Influence="100.0" />
+      <Node Name="Bip01 R Forearm" Influence="100.0" />
+      <Node Name="Bip01 R Hand" Influence="100.0" />
+    </Preset>
+    <Preset Name="Alien Grunt" UsedPoses="3">
+      <Node Name="CNT_FKSpine1" Influence="10.0" />
+      <Node Name="CNT_FKSpine2" Influence="20.0" />
+      <Node Name="CNT_FKSpine3" Influence="40.0" />
+      <Node Name="CNT_FKSpine4" Influence="70.0" />
+      <Node Name="CNT_Neck" Influence="30.0" />
+      <Node Name="CNT_Head" Influence="100.0" />
+      <Node Name="CNT_IKArm_Left" Influence="100.0" Align="CNT_IKArm_Right" />
+      <Node Name="CNT_Stretchy01_Right" Influence="80.0" />
+      <Node Name="CNT_IKArm_Right" Influence="100.0" />
+    </Preset>
+    <Preset Name="Alien Heavy MainGun" UsedPoses="3">
+      <Node Name="CNT_Spine01" Influence="10.0" />
+      <Node Name="CNT_Spine02" Influence="20.0" />
+      <Node Name="CNT_Spine03" Influence="40.0" />
+      <Node Name="CNT_Spine04" Influence="70.0" />
+      <Node Name="CNT_Neck" Influence="30.0" />
+      <Node Name="CNT_Head" Influence="100.0" />
+      <Node Name="CNT_L_Arm" Influence="100.0" />
+      <Node Name="CNT_R_Shoulder" Influence="80.0" />
+      <Node Name="CNT_R_Arm" Influence="80.0" />
+    </Preset>
+    <Preset Name="Alien Heavy LeftGun" UsedPoses="3">
+      <Node Name="CNT_Spine01" Influence="10.0" />
+      <Node Name="CNT_Spine02" Influence="20.0" />
+      <Node Name="CNT_Spine03" Influence="40.0" />
+      <Node Name="CNT_Spine04" Influence="70.0" />
+      <Node Name="CNT_Neck" Influence="30.0" />
+      <Node Name="CNT_Head" Influence="100.0" />
+      <Node Name="CNT_L_Arm" Influence="100.0" />
+      <Node Name="CNT_R_Shoulder" Influence="80.0" />
+      <Node Name="CNT_R_Arm" Influence="80.0" />
+    </Preset>
+  </NodePresets>
+  <PosePresets>
+    <Preset Name="9 Poses, 70 45">
+      <Pose1 Yaw="-70.0" Pitch="45.0" />
+      <Pose2 Yaw="0.0" Pitch="70.0" />
+      <Pose3 Yaw="70.0" Pitch="45.0" />
+      <Pose4 Yaw="-70.0" Pitch="0.0" />
+      <Pose5 Yaw="0.0" Pitch="0.0" />
+      <Pose6 Yaw="70.0" Pitch="0.0" />
+      <Pose7 Yaw="-70.0" Pitch="-45.0" />
+      <Pose8 Yaw="0.0" Pitch="-70.0" />
+      <Pose9 Yaw="70.0" Pitch="-45.0" />
+    </Preset>
+    <Preset Name="9 Poses, 45 45">
+      <Pose1 Yaw="-45.0" Pitch="45.0" />
+      <Pose2 Yaw="0.0" Pitch="45.0" />
+      <Pose3 Yaw="45.0" Pitch="45.0" />
+      <Pose4 Yaw="-45.0" Pitch="0.0" />
+      <Pose5 Yaw="0.0" Pitch="0.0" />
+      <Pose6 Yaw="45.0" Pitch="0.0" />
+      <Pose7 Yaw="-45.0" Pitch="-45.0" />
+      <Pose8 Yaw="0.0" Pitch="-45.0" />
+      <Pose9 Yaw="45.0" Pitch="-45.0" />
+    </Preset>
+    <Preset Name="9 Poses, 90 45">
+      <Pose1 Yaw="-90.0" Pitch="45.0" />
+      <Pose2 Yaw="0.0" Pitch="90.0" />
+      <Pose3 Yaw="90.0" Pitch="45.0" />
+      <Pose4 Yaw="-90.0" Pitch="0.0" />
+      <Pose5 Yaw="0.0" Pitch="0.0" />
+      <Pose6 Yaw="90.0" Pitch="0.0" />
+      <Pose7 Yaw="-90.0" Pitch="-45.0" />
+      <Pose8 Yaw="0.0" Pitch="-90.0" />
+      <Pose9 Yaw="90.0" Pitch="-45.0" />
+    </Preset>
+    <Preset Name="9 Poses, 30 45">
+      <Pose1 Yaw="-30.0" Pitch="45.0" />
+      <Pose2 Yaw="0.0" Pitch="30.0" />
+      <Pose3 Yaw="30.0" Pitch="45.0" />
+      <Pose4 Yaw="-30.0" Pitch="0.0" />
+      <Pose5 Yaw="0.0" Pitch="0.0" />
+      <Pose6 Yaw="30.0" Pitch="0.0" />
+      <Pose7 Yaw="-30.0" Pitch="-45.0" />
+      <Pose8 Yaw="0.0" Pitch="-30.0" />
+      <Pose9 Yaw="30.0" Pitch="-45.0" />
+    </Preset>
+    <Preset Name="9 Poses, 80 45">
+      <Pose1 Yaw="-80.0" Pitch="45.0" />
+      <Pose2 Yaw="0.0" Pitch="80.0" />
+      <Pose3 Yaw="80.0" Pitch="45.0" />
+      <Pose4 Yaw="-80.0" Pitch="0.0" />
+      <Pose5 Yaw="0.0" Pitch="0.0" />
+      <Pose6 Yaw="80.0" Pitch="0.0" />
+      <Pose7 Yaw="-80.0" Pitch="-45.0" />
+      <Pose8 Yaw="0.0" Pitch="-80.0" />
+      <Pose9 Yaw="80.0" Pitch="-45.0" />
+    </Preset>
+    <Preset Name="27 Poses, 170, 80">
+      <Pose1 Yaw="-170.0" Pitch="80.0" />
+      <Pose2 Yaw="-135.0" Pitch="80.0" />
+      <Pose3 Yaw="-90.0" Pitch="80.0" />
+      <Pose4 Yaw="-45.0" Pitch="80.0" />
+      <Pose5 Yaw="0.0" Pitch="80.0" />
+      <Pose6 Yaw="45.0" Pitch="80.0" />
+      <Pose7 Yaw="90.0" Pitch="80.0" />
+      <Pose8 Yaw="135.0" Pitch="80.0" />
+      <Pose9 Yaw="170.0" Pitch="80.0" />
+      <Pose10 Yaw="-170.0" Pitch="0.0" />
+      <Pose11 Yaw="-135.0" Pitch="0.0" />
+      <Pose12 Yaw="-90.0" Pitch="0.0" />
+      <Pose13 Yaw="-45.0" Pitch="0.0" />
+      <Pose14 Yaw="0.0" Pitch="0.0" />
+      <Pose15 Yaw="45.0" Pitch="0.0" />
+      <Pose16 Yaw="90.0" Pitch="0.0" />
+      <Pose17 Yaw="135.0" Pitch="0.0" />
+      <Pose18 Yaw="170.0" Pitch="0.0" />
+      <Pose19 Yaw="-170.0" Pitch="-80.0" />
+      <Pose20 Yaw="-135.0" Pitch="-80.0" />
+      <Pose21 Yaw="-90.0" Pitch="-80.0" />
+      <Pose22 Yaw="-45.0" Pitch="-80.0" />
+      <Pose23 Yaw="0.0" Pitch="-80.0" />
+      <Pose24 Yaw="45.0" Pitch="-80.0" />
+      <Pose25 Yaw="90.0" Pitch="-80.0" />
+      <Pose26 Yaw="135.0" Pitch="-80.0" />
+      <Pose27 Yaw="170.0" Pitch="-80.0" />
+    </Preset>
+    <Preset Name="9 Poses, 90/70 45">
+      <Pose1 Yaw="-90.0" Pitch="45.0" />
+      <Pose2 Yaw="0.0" Pitch="70.0" />
+      <Pose3 Yaw="90.0" Pitch="45.0" />
+      <Pose4 Yaw="-90.0" Pitch="0.0" />
+      <Pose5 Yaw="0.0" Pitch="0.0" />
+      <Pose6 Yaw="90.0" Pitch="0.0" />
+      <Pose7 Yaw="-90.0" Pitch="-45.0" />
+      <Pose8 Yaw="0.0" Pitch="-70.0" />
+      <Pose9 Yaw="90.0" Pitch="-45.0" />
+    </Preset>
+    <Preset Name="15 Poses, 120, 80">
+      <Pose1 Yaw="-120.0" Pitch="80.0" />
+      <Pose2 Yaw="-60.0" Pitch="80.0" />
+      <Pose3 Yaw="0.0" Pitch="80.0" />
+      <Pose4 Yaw="60.0" Pitch="80.0" />
+      <Pose5 Yaw="120.0" Pitch="80.0" />
+      <Pose6 Yaw="-120.0" Pitch="0.0" />
+      <Pose7 Yaw="-60.0" Pitch="0.0" />
+      <Pose8 Yaw="0.0" Pitch="0.0" />
+      <Pose9 Yaw="60.0" Pitch="0.0" />
+      <Pose10 Yaw="120.0" Pitch="0.0" />
+      <Pose11 Yaw="-120.0" Pitch="-80.0" />
+      <Pose12 Yaw="-60.0" Pitch="-80.0" />
+      <Pose13 Yaw="0.0" Pitch="-80.0" />
+      <Pose14 Yaw="60.0" Pitch="-80.0" />
+      <Pose15 Yaw="120.0" Pitch="-80.0" />
+    </Preset>
+    <Preset Name="21 Poses, 150, 80">
+      <Pose1 Yaw="-150.0" Pitch="80.0" />
+      <Pose2 Yaw="-100.0" Pitch="80.0" />
+      <Pose3 Yaw="-50.0" Pitch="80.0" />
+      <Pose4 Yaw="0.0" Pitch="80.0" />
+      <Pose5 Yaw="50.0" Pitch="80.0" />
+      <Pose6 Yaw="100.0" Pitch="80.0" />
+      <Pose7 Yaw="150.0" Pitch="80.0" />
+      <Pose8 Yaw="-150.0" Pitch="0.0" />
+      <Pose9 Yaw="-100.0" Pitch="0.0" />
+      <Pose10 Yaw="-50.0" Pitch="0.0" />
+      <Pose11 Yaw="0.0" Pitch="0.0" />
+      <Pose12 Yaw="50.0" Pitch="0.0" />
+      <Pose13 Yaw="100.0" Pitch="0.0" />
+      <Pose14 Yaw="150.0" Pitch="0.0" />
+      <Pose15 Yaw="-150.0" Pitch="-80.0" />
+      <Pose16 Yaw="-100.0" Pitch="-80.0" />
+      <Pose17 Yaw="-50.0" Pitch="-80.0" />
+      <Pose18 Yaw="0.0" Pitch="-80.0" />
+      <Pose19 Yaw="50.0" Pitch="-80.0" />
+      <Pose20 Yaw="100.0" Pitch="-80.0" />
+      <Pose21 Yaw="150.0" Pitch="-80.0" />
+    </Preset>
+    <Preset Name="15 Poses, 160, 80">
+      <Pose1 Yaw="-160.0" Pitch="80.0" />
+      <Pose2 Yaw="-80.0" Pitch="80.0" />
+      <Pose3 Yaw="0.0" Pitch="80.0" />
+      <Pose4 Yaw="80.0" Pitch="80.0" />
+      <Pose5 Yaw="160.0" Pitch="80.0" />
+      <Pose6 Yaw="-160.0" Pitch="0.0" />
+      <Pose7 Yaw="-80.0" Pitch="0.0" />
+      <Pose8 Yaw="0.0" Pitch="0.0" />
+      <Pose9 Yaw="80.0" Pitch="0.0" />
+      <Pose10 Yaw="160.0" Pitch="0.0" />
+      <Pose11 Yaw="-160.0" Pitch="-80.0" />
+      <Pose12 Yaw="-80.0" Pitch="-80.0" />
+      <Pose13 Yaw="0.0" Pitch="-80.0" />
+      <Pose14 Yaw="80.0" Pitch="-80.0" />
+      <Pose15 Yaw="160.0" Pitch="-80.0" />
+    </Preset>
+  </PosePresets>
+</AimPoses>

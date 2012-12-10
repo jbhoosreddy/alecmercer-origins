@@ -1,0 +1,130 @@
+
+global proc	cryPivotRecurseMoveNode(int $centrePivots,string $node,vector $offset)
+{
+    float $fpivot[];
+    vector $pivot;
+
+	if(`attributeExists "intermediateObject" $node`)
+	{
+		if(`getAttr ($node+".intermediateObject")` == 1 )
+			return;
+	}
+
+    if(`nodeType $node` == "transform")
+    {
+		if( $centrePivots == 1 )
+		{
+			float $bb[];
+			$bb = `polyEvaluate -b $node`;
+			float $centre[];
+			$centre[0] = $bb[0] + $bb[1];
+			$centre[1] = $bb[2] + $bb[3];
+			$centre[2] = $bb[4] + $bb[5];
+			$centre[0] /= 2.0;
+			$centre[1] /= 2.0;
+			$centre[2] /= 2.0;
+			xform -ws -rp $centre[0] $centre[1]  $centre[2] $node;
+			xform -ws -sp $centre[0] $centre[1]  $centre[2] $node;
+		}
+
+	    $fpivot = `xform -q -os -rotatePivot $node`;
+		xform -r -translation ($fpivot[0] - $offset.x) ($fpivot[1] - $offset.y) ($fpivot[2] - $offset.z) $node;
+	    xform -os -pivots (0) (0) (0) $node;
+		$offset = <<$fpivot[0],$fpivot[1],$fpivot[2]>>;
+    }
+	else if(`nodeType $node` == "mesh")
+	{
+		int $eval[] = `polyEvaluate -v $node`;
+		$vertCount = $eval[0];
+		move -r (-$offset.x) (-$offset.y) (-$offset.z) ($node+".vtx[0:"+$vertCount+"]");
+	}
+
+    string $children[];
+    string $child;
+    $children = `listRelatives -children -fullPath $node`;
+    for ($child in $children) 
+    {
+		cryPivotRecurseMoveNode($centrePivots,$child,$offset);
+    }
+}
+
+global proc cryPivotCloseWindow()
+{
+	if(`window -ex CRYPIVOT_WINDOW`) 
+	{
+		deleteUI -window CRYPIVOT_WINDOW;
+	}
+}
+
+global proc cryPivotRun()
+{
+	int $centrePivots = 0;
+	if(`window -ex CRYPIVOT_WINDOW`) 
+	{
+		$centrePivots = `checkBox -q -v CRYPIVOT_CENTREPIVOTS`;
+	}
+
+    $sellist = `ls -sl -long`;
+
+    if(size($sellist) != 1)
+    {
+		confirmDialog -title "Cry Pivot" -message "Wrong number of nodes selected, expected 1." -button "OK" -defaultButton "OK";
+		return;
+    }
+
+	cryPivotCloseWindow;
+
+    string $node = $sellist[0];
+	cryPivotRecurseMoveNode($centrePivots,$node,<<0,0,0>>);
+
+	confirmDialog -title "Cry Pivot" -message "Origins set sucessfully." -button "OK" -defaultButton "OK";
+}
+
+proc cryPivotOptionWindow()
+{
+	if(!`window -ex CRYPIVOT_WINDOW`) 
+	{
+		if(`windowPref -exists CRYPIVOT_WINDOW`) 
+		{
+			windowPref -wh 200 75 -tlc `windowPref -q -topEdge CRYPIVOT_WINDOW` `windowPref -q -leftEdge CRYPIVOT_WINDOW` CRYPIVOT_WINDOW;
+			//windowPref -remove CRYPIVOT_WINDOW;
+		}
+		window -titleBar true -title "Fixup Node Origins" -widthHeight 200 75 -sizeable true -mnb false -mxb false CRYPIVOT_WINDOW;
+
+		$layout1 = `formLayout -numberOfDivisions 100`;
+		{
+			columnLayout -adjustableColumn true CRYPIVOT_COL;
+			{
+				checkBox -label "Centre Pivots" -align "center" CRYPIVOT_CENTREPIVOTS;
+			}
+			setParent ..;
+		}
+		$runbutton = `button -label "Run" -command ("cryPivotRun")`;
+		$cancelbutton = `button -label "Cancel" -command ("cryPivotCloseWindow")`;
+		setParent ..;
+	
+		formLayout -edit
+			-attachForm CRYPIVOT_COL "top" 5
+			-attachForm CRYPIVOT_COL "left" 5
+			-attachForm CRYPIVOT_COL "right" 5
+			-attachControl CRYPIVOT_COL "bottom" 5 $cancelbutton
+
+			-attachForm $runbutton "bottom" 5 
+			-attachForm $runbutton "left" 5 
+			-attachPosition $runbutton "right" 5 50
+			-attachNone $runbutton "top"
+
+			-attachForm $cancelbutton "bottom" 5 
+			-attachPosition $cancelbutton "left" 5 50
+			-attachForm $cancelbutton "right" 5
+			-attachNone $cancelbutton "top"
+			$layout1;
+    }
+
+	showWindow CRYPIVOT_WINDOW;
+}
+
+global proc cryPivot()
+{
+	cryPivotOptionWindow;
+}

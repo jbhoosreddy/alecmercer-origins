@@ -1,0 +1,280 @@
+<Definitions>
+
+    <AnimationDefinition>
+		<!--the reference model-->
+		<Model File="/../Objects/Characters/jelena/skeleton_jelena.chr"/>
+		<!--the path with ALL animation we can use on this model-->
+		<Animation Path="girl"/>
+		<Database Path="girl/girl.dba"/>
+
+		<!--for all animations use compression level 2-->
+		<COMPRESSION value="2"/>
+		<!--for all animations need to detect footplants-->
+		<FOOTPLANTS value="YES"/>
+		<!--add proper locomotion locator to BIP-files. Aliens, vehicles and weapons don't need it. -->
+		<LOCOMOTION_LOCATOR value="YES"/>
+
+		<!--a list of animation that need special handling-->
+		<SpecialAnimsList>
+			<Animation APath="PointPoses" SkipSaveToDatabase="1" footplants="NO" compression="0"/> 
+			<Animation APath="coop" SkipSaveToDatabase="1"/>
+            
+            <!-- Additive animations -->
+			<!-- <Animation APath="facial/caf" Additive_Animation="1" RotEpsilon="0.000000001" PosEpsilon="0.000000001" compression="1" DeletePosController="0" DeleteRotController="0" SkipSaveToDatabase="1"/> -->
+			<Animation APath="Additives" Additive_Animation="1" SkipSaveToDatabase="0" RotEpsilon="0.0000001" PosEpsilon="0.01" compression="2" />
+			<Animation APath="facial/caf" Additive_Animation="1" SkipSaveToDatabase="0" RotEpsilon="0.0000001" PosEpsilon="0.01" compression="2" />
+            
+		</SpecialAnimsList>
+    </AnimationDefinition>
+    
+	<AnimationDefinition>
+		<!--the reference model-->
+		<Model File="/../Objects/Characters/neutral_male/skeleton_character.chr"/>
+		<!--the path with ALL animation we can use on this model-->
+		<Animation Path="human_male"/>
+		<!--for all animations use compression level 1-->
+		<COMPRESSION value="2"/>
+		<RotEpsilon value="0.0000001" />
+		<PosEpsilon value="0.0000001" />
+		<Database Path="human_male/human_male.dba"/>
+		<!--for all animations need to detect footplants-->
+		<FOOTPLANTS value="NO"/>
+		<!--we apply the Locomotion_Locator modification just on BIP-files. Aliens, vehicles and weapons don't need it. -->
+		<LOCOMOTION_LOCATOR value="YES"/>
+		<!--we apply different modifications to the weapons . Human and Aliens don't need it. -->
+		<!--a list of animation that need special handling-->
+
+		<SpecialAnimsList>
+		
+			<Animation APath="cinematics" SkipSaveToDatabase="1" footplants="NO" DeletePosController="0" />
+			<Animation APath="cutscene" SkipSaveToDatabase="1" footplants="NO" DeletePosController="0" />
+
+			<!-- This tells the RC to flag Assets exported to this folder as additive assets and process them differently -->
+			<Animation APath="additive" Additive_Animation="1" SkipSaveToDatabase="0" RotEpsilon="0.0000001" PosEpsilon="0.01" compression="2" />
+			
+			<!-- AIMPOSES COMMON -->
+			<Animation APath="Aim" footplants="NO" compression="0" autocompression="0" SkipSaveToDatabase="1" />
+			<Animation APath="vehicle" footplants="NO"/>
+
+			<!-- LOOKPOSES COMMON -->
+			<Animation APath="Look" SkipSaveToDatabase="1" DeletePosController="0" DeleteRotController="0" compression="0" RotEpsilon="0.00000000001" PosEpsilon="0.00000000001"/>
+		</SpecialAnimsList>
+	</AnimationDefinition>
+	
+	<AnimationDefinition>
+		<!--the NEW reference model-->
+		<Model File="/../Objects/Characters/human/generic/skeleton_player_generic.chr"/>
+		<!--the path with ALL animation we can use on this model-->
+		<Animation Path="human"/>
+		<!--for all animations use compression level 1-->
+		<COMPRESSION value="2"/>
+		<RotEpsilon value="0.0000001" />
+		<PosEpsilon value="0.0000001" />
+		<Database Path="human/human.dba"/>
+		<!--for all animations need to detect footplants-->
+		<FOOTPLANTS value="NO"/>
+		<!--we apply the Locomotion_Locator modification just on BIP-files. Aliens, vehicles and weapons don't need it. -->
+		<LOCOMOTION_LOCATOR value="YES"/>
+		<!--we apply different modifications to the weapons . Human and Aliens don't need it. -->
+		<!--a list of animation that need special handling-->
+
+		<SpecialAnimsList>
+		
+			<Animation APath="cinematics" SkipSaveToDatabase="1" footplants="NO" DeletePosController="0" />
+			<Animation APath="cutscene" SkipSaveToDatabase="1" footplants="NO" DeletePosController="0" />
+
+			<!-- This tells the RC to flag Assets exported to this folder as additive assets and process them differently -->
+			<Animation APath="additive" Additive_Animation="1" SkipSaveToDatabase="0" RotEpsilon="0.0000001" PosEpsilon="0.01" compression="2" />
+			
+			<!-- AIMPOSES COMMON -->
+			<Animation APath="Aim" footplants="NO" compression="0" autocompression="0" SkipSaveToDatabase="1" />
+			<Animation APath="vehicle" footplants="NO"/>
+
+			<!-- LOOKPOSES COMMON -->
+			<Animation APath="Look" SkipSaveToDatabase="1" DeletePosController="0" DeleteRotController="0" compression="0" RotEpsilon="0.00000000001" PosEpsilon="0.00000000001"/>
+		</SpecialAnimsList>
+	</AnimationDefinition>
+
+<!-- //animation definitions for the 1st person arms (weapon type) -->
+	<AnimationDefinition>
+		<DeletePosController value="0"/>
+		<DeleteRotController value="0"/>
+		<Model File="/../objects/weapons/arms_fp/arms_fp.chr"/>
+		<Animation Path="1st_person/arms_fp/"/>
+		<Database Path="1st_person/arms_fp/arms_fp.dba"/>
+		<COMPRESSION value="1"/>
+		<AUTOCOMPRESSION value="0"/>
+		<FOOTPLANTS value="NO"/>
+		<WEAPON value="YES"/>
+		<LOCOMOTION_LOCATOR value="NO"/>
+	
+	<SpecialAnimsList>
+    </SpecialAnimsList>
+	</AnimationDefinition>
+	
+<!-- //animation definitions for the 1st person example weapon (weapon type) -->
+	<AnimationDefinition>
+		<DeletePosController value="0"/>
+		<DeleteRotController value="0"/>
+		<Model File="/../objects/weapons/Scar/scar_fp.chr"/>
+		<Animation Path="1st_person/scar_fp/"/>
+		<Database Path="1st_person/scar_fp/scar_fp.dba"/>
+		<COMPRESSION value="1"/>
+		<AUTOCOMPRESSION value="0"/>
+		<FOOTPLANTS value="NO"/>
+		<LOCOMOTION_LOCATOR value="NO"/>
+		<WEAPON value="YES"/>
+		<SpecialAnimsList>
+    </SpecialAnimsList>
+	</AnimationDefinition>
+	
+	<!-- //animation definitions for the 1st person weapon (weapon type) -->
+	<AnimationDefinition>
+		<DeletePosController value="0"/>
+		<DeleteRotController value="0"/>
+		<Model File="/../Objects/Weapons/binoculars/binoculars_fp.chr"/>
+		<Animation Path="1st_person/binoculars_fp/"/>
+		<Database Path="1st_person/binoculars_fp/binoculars_fp.dba"/>
+		<COMPRESSION value="1"/>
+		<AUTOCOMPRESSION value="0"/>
+		<FOOTPLANTS value="NO"/>
+		<WEAPON value="NO"/>
+		<LOCOMOTION_LOCATOR value="NO"/>
+	
+	<SpecialAnimsList>
+    </SpecialAnimsList>
+	</AnimationDefinition>
+	
+	<!-- //animation definitions for the 1st person weapon (weapon type) -->
+	<AnimationDefinition>
+		<DeletePosController value="0"/>
+		<DeleteRotController value="0"/>
+		<Model File="/../objects/weapons/Rocket_launcher/Rocket_launcher_fp.chr"/>
+		<Animation Path="1st_person/Rocket_launcher_fp/"/>
+		<Database Path="1st_person/Rocket_launcher_fp/Rocket_launcher_fp.dba"/>
+		<COMPRESSION value="1"/>
+		<AUTOCOMPRESSION value="0"/>
+		<FOOTPLANTS value="NO"/>
+		<WEAPON value="YES"/>
+		<LOCOMOTION_LOCATOR value="NO"/>
+	
+	<SpecialAnimsList>
+    </SpecialAnimsList>
+	</AnimationDefinition>	
+	
+	
+	<!-- //animation definitions for the 1st person example weapon (weapon type) -->
+	<AnimationDefinition>
+		<DeletePosController value="0"/>
+		<DeleteRotController value="0"/>
+		<Model File="/../objects/weapons/us/nw/nw_arms_fp.chr"/>
+		<Animation Path="1st_person/nw/"/>
+		<Database Path="1st_person/nw/nw_arms_fp.dba"/>
+		<COMPRESSION value="1"/>
+		<AUTOCOMPRESSION value="0"/>
+		<FOOTPLANTS value="NO"/>
+		<LOCOMOTION_LOCATOR value="NO"/>
+		<WEAPON value="YES"/>
+		<SpecialAnimsList>
+    </SpecialAnimsList>
+	</AnimationDefinition>
+
+
+
+	<!-- //animation definitions for the 1st person example weapon (weapon type) -->
+	<AnimationDefinition>
+		<DeletePosController value="0"/>
+		<DeleteRotController value="0"/>
+		<Model File="/../objects/weapons/us/frag_grenade/frag_grenade_left_fp.chr"/>
+		<Animation Path="1st_person/frag_grenade/left"/>
+		<Database Path="1st_person/frag_grenade_left_fp.dba"/>
+		<COMPRESSION value="1"/>
+		<AUTOCOMPRESSION value="0"/>
+		<FOOTPLANTS value="NO"/>
+		<LOCOMOTION_LOCATOR value="NO"/>
+		<WEAPON value="YES"/>
+		<SpecialAnimsList>
+    </SpecialAnimsList>
+	</AnimationDefinition>
+
+	<!-- //animation definitions for PIGEON -->
+	<AnimationDefinition>
+		<Model File="/../objects/characters/animals/birds/pigeon/pigeon_lf.chr"/>
+		<Animation Path="animals/birds/pigeon"/>
+		<COMPRESSION value="0"/>
+		<DataBase Path="animals/birds/pigeon/pigeon.dba"/>
+		<RotEpsilon value ="0.05"/>
+		<PosEpsilon value ="0.01"/>
+    </AnimationDefinition>
+	
+	<AnimationDefinition>
+		<Model File="/../objects/characters/dragon/dragon_4rig.chr"/>
+		<Animation Path="animals/dragon"/>
+		<Database Path="animals/dragon/dragon.dba"/>
+    	<COMPRESSION value="2"/>
+		<AUTOCOMPRESSION value="0"/>
+		<LOCOMOTION_LOCATOR value="YES"/>
+		<WEAPON value="NO"/>
+		<SpecialAnimsList>
+	</SpecialAnimsList>
+	</AnimationDefinition>
+	
+	<!-- //animation definitions for red eared slider -->
+	<AnimationDefinition>
+		<Model File="/../objects/characters/animals/turtles/red_eared_slider/red_eared_slider.chr"/>
+		<Animation Path="animals/turtles/red_eared_slider"/>
+		<COMPRESSION value="2"/>
+		<DataBase Path="animals/turtles/red_eared_slider.dba"/>
+		<RotEpsilon value ="0.05"/>
+		<PosEpsilon value ="0.01"/>
+    </AnimationDefinition>
+	
+	<!-- //animation definitions for rooster-->
+	<AnimationDefinition>
+		<Model File="/../objects/characters/animals/birds/rooster/rooster.chr"/>
+		<Animation Path="animals/birds/rooster"/>
+		<COMPRESSION value="2"/>
+		<DataBase Path="animals/birds/rooster.dba"/>
+    </AnimationDefinition>
+	
+	<!-- //animation definitions for toad-->
+	<AnimationDefinition>
+		<Model File="/../objects/characters/animals/amphibians/toad/toad.chr"/>
+		<Animation Path="animals/amphibians/toad"/>
+		<COMPRESSION value="2"/>
+		<DataBase Path="animals/amphibians/toad.dba"/>
+    </AnimationDefinition>
+
+	<!-- //animation definitions for fish a-->
+	<AnimationDefinition>
+		<Model File="/../objects/characters/animals/Fish/fresh_water/trout_a.chr"/>
+		<Animation Path="animals/fish/fresh_water"/>
+		<COMPRESSION value="2"/>
+		<DataBase Path="animals/fish/fresh_water/trout.dba"/>
+    </AnimationDefinition>
+	
+	<!-- //animation definitions for fish b-->
+	<AnimationDefinition>
+		<Model File="/../objects/characters/animals/Fish/fresh_water/trout_b.chr"/>
+		<Animation Path="animals/fish/fresh_water"/>
+		<COMPRESSION value="2"/>
+		<DataBase Path="animals/fish/fresh_water/trout.dba"/>
+    </AnimationDefinition>
+	
+	<!-- //animation definitions for fish c-->
+	<AnimationDefinition>
+		<Model File="/../objects/characters/animals/Fish/fresh_water/trout_c.chr"/>
+		<Animation Path="animals/fish/fresh_water"/>
+		<COMPRESSION value="2"/>
+		<DataBase Path="animals/fish/fresh_water/trout.dba"/>
+    </AnimationDefinition>
+	
+	<!-- //animation definitions for Seagull-->
+	<AnimationDefinition>
+		<Model File="/../objects/characters/animals/birds/Seagull/seagull.chr"/>
+		<Animation Path="animals/birds/Seagull"/>
+		<COMPRESSION value="2"/>
+		<DataBase Path="animals/birds/seagull.dba"/>
+    </AnimationDefinition>
+	
+</Definitions>

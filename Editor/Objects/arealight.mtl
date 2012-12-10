@@ -1,0 +1,8 @@
+<Material Diffuse="0.99215692,0.99215692,0.99215692" Emissive="0,0,0" GenMask="1" MtlFlags="0" Opacity="1" Shader="Illum" Shininess="9.999999" Specular="0,0,0" SurfaceType="" >
+ <Textures>
+  <Texture File="P:/_FARCRY/VSS_RESTORE/ArtworkVSS/MasterCD/Objects/Editor/gradf.dds" Map="Diffuse" >
+   <TexMod />
+  </Texture>
+ </Textures>
+ <PublicParams BumpOffset="0.039999999" DebugUVScale="64" />
+</Material>
